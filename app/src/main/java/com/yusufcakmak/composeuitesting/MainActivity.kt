@@ -3,36 +3,112 @@ package com.yusufcakmak.composeuitesting
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.*
+import com.yusufcakmak.composeuitesting.ui.*
+import com.yusufcakmak.composeuitesting.ui.navigation.NavigationItem
 import com.yusufcakmak.composeuitesting.ui.theme.ComposeUITestingTheme
+
+/*
+https://johncodeos.com/how-to-create-bottom-navigation-bar-with-jetpack-compose/
+*/
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ComposeUITestingTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
-                    Greeting("Android")
-                }
+            ComposeUITestingTheme() {
+                MainScreen()
             }
+
         }
     }
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+fun MainScreen() {
+    val navController = rememberNavController()
+    Scaffold(
+        topBar = { TopBar() },
+        bottomBar = { BottomNavigationBar(navController) }
+    ) {
+        Navigation(navController = navController)
+    }
+}
+
+@Composable
+fun Navigation(navController: NavHostController) {
+    NavHost(navController, startDestination = NavigationItem.Home.route) {
+        composable(NavigationItem.Home.route) {
+            HomeScreen()
+        }
+        composable(NavigationItem.Pokemons.route) {
+            PokemonListScreen()
+        }
+    }
+}
+
+@Composable
+fun TopBar() {
+    TopAppBar(
+        title = { Text(text = stringResource(R.string.app_name), fontSize = 18.sp) },
+        backgroundColor = colorResource(id = R.color.purple_700),
+        contentColor = Color.White
+    )
+}
+
+
+@Composable
+fun BottomNavigationBar(navController: NavController) {
+    val items = listOf(
+        NavigationItem.Home,
+        NavigationItem.Pokemons
+    )
+    BottomNavigation(
+        backgroundColor = colorResource(id = R.color.purple_700),
+        contentColor = Color.White
+    ) {
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route
+        items.forEach { item ->
+            BottomNavigationItem(
+                icon = { Icon(painterResource(id = item.icon), contentDescription = item.title, modifier = Modifier.height(18.dp)) },
+                label = { Text(text = item.title) },
+                selectedContentColor = Color.White,
+                unselectedContentColor = Color.White.copy(0.4f),
+                alwaysShowLabel = true,
+                selected = currentRoute == item.route,
+                onClick = {
+                    navController.navigate(item.route) {
+                        navController.graph.startDestinationRoute?.let { route ->
+                            popUpTo(route) {
+                                saveState = true
+                            }
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                }
+            )
+        }
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
-    ComposeUITestingTheme {
-        Greeting("Android")
-    }
+fun MainScreenPreview() {
+    MainScreen()
 }

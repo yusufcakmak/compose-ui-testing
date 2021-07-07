@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,7 +17,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
 import com.yusufcakmak.composeuitesting.ui.*
 import com.yusufcakmak.composeuitesting.ui.navigation.NavigationItem
+import com.yusufcakmak.composeuitesting.ui.theme.BlueGrey500
 import com.yusufcakmak.composeuitesting.ui.theme.ComposeUITestingTheme
+import com.yusufcakmak.composeuitesting.ui.theme.White
 
 /*
 https://johncodeos.com/how-to-create-bottom-navigation-bar-with-jetpack-compose/
@@ -65,8 +65,8 @@ fun Navigation(navController: NavHostController) {
 fun TopBar() {
     TopAppBar(
         title = { Text(text = stringResource(R.string.app_name), fontSize = 18.sp) },
-        backgroundColor = colorResource(id = R.color.purple_700),
-        contentColor = Color.White
+        backgroundColor = BlueGrey500,
+        contentColor = White
     )
 }
 
@@ -78,8 +78,8 @@ fun BottomNavigationBar(navController: NavController) {
         NavigationItem.Pokemons
     )
     BottomNavigation(
-        backgroundColor = colorResource(id = R.color.purple_700),
-        contentColor = Color.White
+        backgroundColor = BlueGrey500,
+        contentColor = White
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
@@ -87,8 +87,8 @@ fun BottomNavigationBar(navController: NavController) {
             BottomNavigationItem(
                 icon = { Icon(painterResource(id = item.icon), contentDescription = item.title, modifier = Modifier.height(18.dp)) },
                 label = { Text(text = item.title) },
-                selectedContentColor = Color.White,
-                unselectedContentColor = Color.White.copy(0.4f),
+                selectedContentColor = White,
+                unselectedContentColor = White.copy(0.4f),
                 alwaysShowLabel = true,
                 selected = currentRoute == item.route,
                 onClick = {

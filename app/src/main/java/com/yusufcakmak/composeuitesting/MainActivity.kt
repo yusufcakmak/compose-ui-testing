@@ -17,6 +17,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.*
 import com.yusufcakmak.composeuitesting.ui.*
 import com.yusufcakmak.composeuitesting.ui.navigation.NavigationItem
+import com.yusufcakmak.composeuitesting.ui.screens.HomeScreen
+import com.yusufcakmak.composeuitesting.ui.screens.PokemonListScreen
 import com.yusufcakmak.composeuitesting.ui.theme.BlueGrey500
 import com.yusufcakmak.composeuitesting.ui.theme.ComposeUITestingTheme
 import com.yusufcakmak.composeuitesting.ui.theme.White

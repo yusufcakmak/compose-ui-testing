@@ -27,19 +27,26 @@ import com.yusufcakmak.composeuitesting.ui.theme.Typography
 @Composable
 fun HomeScreen() {
     ComposeUITestingTheme() {
-        PokemonsCard()
+        val loader = ImageLoader.Builder(LocalContext.current)
+            .componentRegistry {
+                add(SvgDecoder(LocalContext.current))
+            }
+            .build()
+        PokemonsCard(imageLoader = loader)
     }
 }
 
 @Composable
-fun PokemonsCard(){
+fun PokemonsCard(imageLoader: ImageLoader) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .height(150.dp)
             .padding(start = 16.dp, end = 16.dp, top = 8.dp, bottom = 8.dp)
             .background(colorResource(id = R.color.white))
-            .clickable { },
+            .clickable {
+
+            },
         elevation = 10.dp
     ) {
         Column(
@@ -57,12 +64,10 @@ fun PokemonsCard(){
             horizontalAlignment = Alignment.End
         ) {
             Image(
-                painter = rememberCoilPainter(PokemonDataProvider.fetchPokemonList().first().image,
-                    imageLoader = ImageLoader.Builder(LocalContext.current)
-                        .componentRegistry {
-                            add(SvgDecoder(LocalContext.current))
-                        }
-                        .build()),
+                painter = rememberCoilPainter(
+                    PokemonDataProvider.fetchPokemonList().first().image,
+                    imageLoader = imageLoader
+                ),
                 contentDescription = stringResource(R.string.app_name),
                 modifier = Modifier.padding(16.dp)
             )

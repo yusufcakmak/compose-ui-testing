@@ -69,18 +69,11 @@ fun PokemonListItem(pokemon: Pokemon) {
         elevation = 10.dp
     ) {
         Column() {
-            val nameText = buildAnnotatedString {
-                append("Name: ")
-                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                    append(pokemon.name)
-                }
-            }
             Text(
-                text = nameText,
-                style = Typography.body1,
+                text = pokemon.name,
+                style = Typography.caption,
                 modifier = Modifier.padding(16.dp),
             )
-
         }
 
         Column(

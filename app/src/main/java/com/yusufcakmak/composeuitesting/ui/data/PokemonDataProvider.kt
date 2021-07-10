@@ -4,9 +4,10 @@ object PokemonDataProvider {
 
     fun fetchPokemonList() : List<Pokemon>{
         val pokemonList = mutableListOf<Pokemon>()
-        pokemonList.add(Pokemon("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/25.svg","pikachu","60"))
-        pokemonList.add(Pokemon("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg","bulbasaur","69"))
-        pokemonList.add(Pokemon("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/4.svg","charmander","85"))
+        pokemonList.add(Pokemon("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/25.svg","Pikachu","electric"))
+        pokemonList.add(Pokemon("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg","Bulbasaur","grass"))
+        pokemonList.add(Pokemon("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/4.svg","Charmander","fire"))
+        pokemonList.add(Pokemon("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/7.svg","Squirtle","water"))
 
         return pokemonList
     }
@@ -16,5 +17,5 @@ object PokemonDataProvider {
 data class Pokemon(
     val image: String,
     val name: String,
-    val weight: String
+    val type: String
 )
